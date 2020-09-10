@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React,{ Component } from 'react';
+import store from './store';
+import actionCreates from './store/actionCreates';
+class App extends Component{
+  componentDidMount(){
+    store.subscribe(()=>{
+      this.setState({})
+    });
+  }
+  render(){
+    const { Count,Test } = store.getState();
+    return (
+      <>
+        <div>当前count:{ Count.count }---{Test.text}</div>
+        <button onClick={()=>{
+           const { dispatch } = store;
+           dispatch(actionCreates.add())
+        }}>+</button>
+        <button onClick={()=>{
+           const { dispatch } = store;
+           dispatch({
+             type:'updata'
+           })
+        }}>修改</button>
+      </>
+    )
+  }
 }
 
 export default App;
